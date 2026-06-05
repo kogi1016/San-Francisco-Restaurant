@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>샌프란시스코 맛집 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --card: #1a1d27;
+  --card2: #1f2235;
+  --border: rgba(255,255,255,0.07);
+  --gold: #f0b429;
+  --gold2: #ffd166;
+  --blue: #4e9af1;
+  --green: #3ecf8e;
+  --pink: #f687b3;
+  --text: #e8eaf0;
+  --muted: #8892a4;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 16px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.brand-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.header-badge {
+  font-size: 11px;
+  background: rgba(240,180,41,0.12);
+  color: var(--gold);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(240,180,41,0.2);
+  font-weight: 500;
+}
+.header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+.header-sub {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.header-sub span {
+  display: flex; align-items: center; gap: 3px;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 12px 16px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab.active {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 20px 16px 10px;
+}
+
+/* RESTAURANT CARD */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 0 16px 10px;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card:active { transform: scale(0.98); }
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 14px 10px;
+}
+.card-num {
+  width: 28px; height: 28px;
+  background: rgba(240,180,41,0.12);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.card-num.near { background: rgba(78,154,241,0.12); color: var(--blue); }
+.card-info { flex: 1; min-width: 0; }
+.card-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.card-type {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.star-badge {
+  display: flex; align-items: center; gap: 3px;
+  background: rgba(240,180,41,0.1);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+.dist-badge {
+  font-size: 11px;
+  color: var(--blue);
+  background: rgba(78,154,241,0.1);
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+.price-badge {
+  font-size: 11px;
+  color: var(--green);
+  background: rgba(62,207,142,0.1);
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+.michelin-badge {
+  font-size: 10px;
+  color: var(--pink);
+  background: rgba(246,135,179,0.1);
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.card-hours {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 0 14px 8px 54px;
+  display: flex; align-items: center; gap: 4px;
+}
+.hours-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.card-review {
+  margin: 0 14px 10px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  border-left: 2px solid rgba(240,180,41,0.3);
+}
+.card-btns {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+.btn {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.btn:not(:last-child) { border-right: 1px solid var(--border); }
+.btn:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+.btn.map { color: var(--blue); }
+.btn.reserve { color: var(--green); }
+
+/* FOOTER */
+.footer {
+  margin: 28px 16px 0;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-left { font-size: 13px; font-weight: 600; color: var(--text); }
+.footer-right { font-size: 12px; color: var(--muted); }
+.footer-guide {
+  display: flex; align-items: center; gap: 6px; margin-top: 4px;
+}
+.guide-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100%{opacity:1} 50%{opacity:0.4}
+}
+
+/* HIDDEN */
+.section-block { display: none; }
+.section-block.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="brand">
+      <div class="brand-icon">✈</div>
+      <span class="brand-text">ACE TOUR</span>
+    </div>
+    <span class="header-badge">2030 세미투어</span>
+  </div>
+  <div class="header-title">🌉 샌프란시스코 맛집 가이드</div>
+  <div class="header-sub">
+    <span>📍 Parc 55 Hilton 기준</span>
+    <span>·</span>
+    <span>⭐ 평점순 정렬</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('near', this)">🏃 호텔 근처</button>
+  <button class="tab" onclick="showTab('famous', this)">🌟 SF 유명 맛집</button>
+</div>
+
+<!-- 호텔 근처 -->
+<div id="near" class="section-block visible">
+  <div class="section-label">Parc 55 Hilton 도보 거리순</div>
+
+  <!-- 1. Bodega SF -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">1</div>
+      <div class="card-info">
+        <div class="card-name">Bodega SF</div>
+        <div class="card-type">베트남 요리 · 138 Mason St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.1 <span style="color:var(--muted);font-weight:400">(789)</span></span>
+          <span class="dist-badge">🚶 14m</span>
+          <span class="price-badge">$$ 보통</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~일 11AM–3PM, 5–10PM (금토 10:30PM)
+    </div>
+    <div class="card-review">"레몬그라스 포크찹, 쉐이킹 비프 강추! 예약 필수. 포르치니 버섯, 바삭한 스프링롤도 맛있어요."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?cid=3170891040427760060" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.opentable.com/restref/client/?rid=bodega-sf" target="_blank">📋 예약/정보</a>
+    </div>
+  </div>
+
+  <!-- 2. Magnin Street Cafe -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">2</div>
+      <div class="card-info">
+        <div class="card-name">Magnin Street Cafe & Bistro</div>
+        <div class="card-type">브런치 · 카페 · 138 Cyril Magnin St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.6 <span style="color:var(--muted);font-weight:400">(465)</span></span>
+          <span class="dist-badge">🚶 108m</span>
+          <span class="price-badge">$$ 보통</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~일 7AM–3PM, 금토 5–10PM 디너 추가
+    </div>
+    <div class="card-review">"누텔라 프렌치토스트 강추! 스테이크 에그도 완벽. 아늑한 분위기, 친절한 서비스."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJt4S8_XuBhYARzDbXXYAiuno" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.yelp.com/biz/magnin-street-cafe-san-francisco" target="_blank">📋 예약/정보</a>
+    </div>
+  </div>
+
+  <!-- 3. HINODEYA Ramen -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">3</div>
+      <div class="card-info">
+        <div class="card-name">HINODEYA Ramen</div>
+        <div class="card-type">라멘 · 일식 · 219 O'Farrell St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.6 <span style="color:var(--muted);font-weight:400">(3,017)</span></span>
+          <span class="dist-badge">🚶 175m</span>
+          <span class="price-badge">$$ 보통</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      매일 10AM–1:30AM (금토 3:30AM)
+    </div>
+    <div class="card-review">"스키야키 라멘, 스파이시 미소콘 강추. 새벽 늦게까지 영업해서 야식으로도 최고!"</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJ84iU6DOBhYARHXonh3NuCNo" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.yelp.com/biz/hinodeya-ramen-san-francisco-2" target="_blank">📋 예약/정보</a>
+    </div>
+  </div>
+
+  <!-- 4. Al Pastor Papi -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">4</div>
+      <div class="card-info">
+        <div class="card-name">Al Pastor Papi</div>
+        <div class="card-type">멕시칸 타코 · 232 O'Farrell St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.6 <span style="color:var(--muted);font-weight:400">(143)</span></span>
+          <span class="dist-badge">🚶 191m</span>
+          <span class="price-badge">$ 저렴</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--gold)"></div>
+      화~목 11AM–8PM, 금토 11AM–9PM (월·일 휴무)
+    </div>
+    <div class="card-review">"알 파스토르·카르네 아사다·누오팔레스 타코 모두 맛있어요. 씨드오일 안 써서 건강하고 가성비 최고!"</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJb8aQHACBhYAR4IOvll5mgzk" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.yelp.com/biz/al-pastor-papi-san-francisco" target="_blank">📋 정보</a>
+    </div>
+  </div>
+
+  <!-- 5. ONE65 SF -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">5</div>
+      <div class="card-info">
+        <div class="card-name">ONE65 San Francisco</div>
+        <div class="card-type">프렌치 파티스리 · 카페 · 165 O'Farrell St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.6 <span style="color:var(--muted);font-weight:400">(942)</span></span>
+          <span class="dist-badge">🚶 228m</span>
+          <span class="price-badge">$$ 보통</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~일 8AM–6PM (화~토 8PM까지)
+    </div>
+    <div class="card-review">"SF 속의 파리! 피스타치오 페이스트리, 버터 크루아상, 라떼 아트 완벽. 쇼핑 후 들리기 딱."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJzxVWOIeBhYARSNZy095UfLA" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://one65sf.com" target="_blank">📋 공식 사이트</a>
+    </div>
+  </div>
+
+  <!-- 6. ABSteak -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">6</div>
+      <div class="card-info">
+        <div class="card-name">ABSteak by Chef Akira Back</div>
+        <div class="card-type">고급 한국 BBQ · 스테이크 · 124 Ellis St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.6 <span style="color:var(--muted);font-weight:400">(122)</span></span>
+          <span class="dist-badge">🚶 250m</span>
+          <span class="price-badge">$$$ 고급</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--gold)"></div>
+      화~일 5:30–8:30PM (월 휴무) · 지하 위치
+    </div>
+    <div class="card-review">"와규 리브아이, 불고기, 김치 볶음밥 최고. 요리사가 직접 구워줘서 특별한 경험. 예약 필수!"</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJ88fLd4SBhYARn1K3Y9x4gj4" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.resy.com/cities/sf/venues/abv-restaurant" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 7. Honey Honey -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">7</div>
+      <div class="card-info">
+        <div class="card-name">Honey Honey Cafe & Crepery</div>
+        <div class="card-type">크레페 · 브런치 · 599 Post St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.3 <span style="color:var(--muted);font-weight:400">(4,290)</span></span>
+          <span class="dist-badge">🚶 372m</span>
+          <span class="price-badge">$$ 보통</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~목 8AM–3PM / 금~일 7:30AM–8PM
+    </div>
+    <div class="card-review">"누텔라 딸기 크레페, 버터밀크 팬케이크 강추! 자리 빨리 차니 일찍 가세요. 리뷰 4,290개 검증 맛집."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJJ5FAFI6AhYARWc6pWHaIZZE" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.yelp.com/biz/honey-honey-cafe-and-crepery-san-francisco" target="_blank">📋 정보</a>
+    </div>
+  </div>
+
+  <!-- 8. Bartlett Hall -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num near">8</div>
+      <div class="card-info">
+        <div class="card-name">Bartlett Hall</div>
+        <div class="card-type">가스트로펍 · 크래프트 비어 · 242 O'Farrell St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.2 <span style="color:var(--muted);font-weight:400">(947)</span></span>
+          <span class="dist-badge">🚶 280m</span>
+          <span class="price-badge">$$ 보통</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~수 3–10PM / 목~일 12–10PM
+    </div>
+    <div class="card-review">"크래프트 맥주 종류 많고 피시앤칩스 맛있어요. 쇼핑 후 맥주 한 잔 하기 딱 좋은 분위기!"</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJh3olFI-AhYARZ3pVINkbpts" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.yelp.com/biz/bartlett-hall-san-francisco" target="_blank">📋 정보</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- SF 유명 맛집 -->
+<div id="famous" class="section-block">
+  <div class="section-label">샌프란시스코 전체 추천 맛집</div>
+
+  <!-- 1. House of Prime Rib -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">1</div>
+      <div class="card-info">
+        <div class="card-name">House of Prime Rib</div>
+        <div class="card-type">프라임 립 스테이크 · Van Ness</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.7 <span style="color:var(--muted);font-weight:400">(7,270)</span></span>
+          <span class="price-badge">$$$ 고급</span>
+          <span class="michelin-badge">🏆 SF 명물</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~금 5–10PM / 토일 4–10PM · 예약 필수
+    </div>
+    <div class="card-review">"SF 온다면 무조건 가야 할 곳! King Henry 사이즈 다 먹으면 한 번 더 줍니다. 으깬 감자, 크리밍 시금치도 별미."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJg67caeqAhYAR2UQjKb1a8j4" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.opentable.com/house-of-prime-rib" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 2. Kokkari -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">2</div>
+      <div class="card-info">
+        <div class="card-name">Kokkari Estiatorio</div>
+        <div class="card-type">그리스 요리 · Jackson St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.7 <span style="color:var(--muted);font-weight:400">(3,505)</span></span>
+          <span class="price-badge">$$$$ 럭셔리</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~금 11:30AM–2:30PM, 5–10PM / 토일 5–10PM
+    </div>
+    <div class="card-review">"20년 된 SF 최고 그리스 레스토랑. 브란치노, 람 소블라키, 베이크드 페타 꼭 드세요. 분위기 최고!"</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJTel9dGCAhYARQGwrTfGZ07M" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.opentable.com/kokkari-estiatorio" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 3. Liholiho -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">3</div>
+      <div class="card-info">
+        <div class="card-name">Liholiho Yacht Club</div>
+        <div class="card-type">하와이안 퓨전 · Sutter St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.7 <span style="color:var(--muted);font-weight:400">(1,952)</span></span>
+          <span class="price-badge">$$$ 고급</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~토 5–9PM (일 휴무)
+    </div>
+    <div class="card-review">"코코넛 칵테일 최고! 타로 퍼프, 포크찹, 와규 자부톤 강추. 2030 데이트 코스로 완벽."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJkVSnJpKAhYARCSaDnRo5brE" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.resy.com/cities/sf/liholiho-yacht-club" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 4. Rich Table -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">4</div>
+      <div class="card-info">
+        <div class="card-name">Rich Table</div>
+        <div class="card-type">캘리포니아 아메리칸 · Gough St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.7 <span style="color:var(--muted);font-weight:400">(1,575)</span></span>
+          <span class="price-badge">$$$ 고급</span>
+          <span class="michelin-badge">⭐ 미슐랭</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      매일 5–10PM
+    </div>
+    <div class="card-review">"정어리 칩, 유니 파스타, 소고기 만두 강추. 독창적인 조합과 세련된 플레이팅. SF 미식가 필수 코스."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJh_24QJ-AhYAR_xbUNVN2Xns" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.resy.com/cities/sf/rich-table" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 5. State Bird -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">5</div>
+      <div class="card-info">
+        <div class="card-name">State Bird Provisions</div>
+        <div class="card-type">아메리칸 딤섬 퓨전 · Fillmore St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.5 <span style="color:var(--muted);font-weight:400">(2,448)</span></span>
+          <span class="price-badge">$$$ 고급</span>
+          <span class="michelin-badge">⭐⭐ 미슐랭</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~일 5:30–10PM (금토 10:30PM)
+    </div>
+    <div class="card-review">"딤섬 카트로 서빙하는 독특한 경험! 트라웃, 사워도우 팬케이크 강추. 예약 오픈하자마자 마감될 정도로 인기."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJQ7kGpLmAhYARKeCe2pDobWk" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.resy.com/cities/sf/state-bird-provisions" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 6. Waterbar -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">6</div>
+      <div class="card-info">
+        <div class="card-name">Waterbar Restaurant</div>
+        <div class="card-type">씨푸드 · 엠바카데로 워터프론트</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.5 <span style="color:var(--muted);font-weight:400">(4,427)</span></span>
+          <span class="price-badge">$$$ 고급</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      월~목 11:30AM–9PM / 금토 11:30AM–9:30PM
+    </div>
+    <div class="card-review">"베이 브릿지 뷰 맛집! 굴 $1.5 특가, 랍스터 롤, 블랙 코드 완벽. 로맨틱한 저녁 식사로 최고."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJgXkuGnCAhYARbVYisXVfO68" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.opentable.com/waterbar" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+  <!-- 7. Lazy Bear -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">7</div>
+      <div class="card-info">
+        <div class="card-name">Lazy Bear</div>
+        <div class="card-type">파인다이닝 · 미션 디스트릭트</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.7 <span style="color:var(--muted);font-weight:400">(1,178)</span></span>
+          <span class="price-badge">$$$$ 럭셔리</span>
+          <span class="michelin-badge">⭐⭐ 미슐랭</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      화~토 5–10PM (일월 휴무) · 사전 티켓 구매
+    </div>
+    <div class="card-review">"SF 최고 파인다이닝 중 하나. 가리비, 와규, 캐비어 서프라이즈 코스 감동적. 티켓 방식으로 예약."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJk35bizx-j4AREil6UPp7Jn4" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.lazybear.io" target="_blank">📋 티켓 예약</a>
+    </div>
+  </div>
+
+  <!-- 8. The Progress -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-num">8</div>
+      <div class="card-info">
+        <div class="card-name">The Progress</div>
+        <div class="card-type">캘리포니아 아메리칸 · Fillmore St</div>
+        <div class="card-meta">
+          <span class="star-badge">★ 4.6 <span style="color:var(--muted);font-weight:400">(1,303)</span></span>
+          <span class="price-badge">$$$ 고급</span>
+          <span class="michelin-badge">⭐ 미슐랭</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-hours">
+      <div class="hours-dot" style="background:var(--green)"></div>
+      매일 5:30–10PM · State Bird 옆
+    </div>
+    <div class="card-review">"BBQ 립 덕, 캐비어 감자 클라우드, 아티초크 토스트 환상적. State Bird 옆에 있어 같이 방문하기 좋아요."</div>
+    <div class="card-btns">
+      <a class="btn map" href="https://maps.google.com/?place_id=ChIJ8zXoo7mAhYARtoa-WE3d5NE" target="_blank">🗺 지도</a>
+      <a class="btn reserve" href="https://www.resy.com/cities/sf/the-progress" target="_blank">📋 예약</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    <div class="footer-left">ACE TOUR · 2030 세미투어</div>
+    <div class="footer-guide">
+      <div class="guide-dot"></div>
+      <span style="font-size:12px;color:var(--muted)">제이팀장</span>
+    </div>
+  </div>
+  <div class="footer-right" style="text-align:right">
+    <div>Parc 55 Hilton 기준</div>
+    <div style="margin-top:2px">샌프란시스코 맛집 가이드</div>
+  </div>
+</div>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.section-block').forEach(b => b.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
